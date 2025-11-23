@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Mundo de Histórias</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #1a1a1a;
+      --text: #f2f2f2;
+      --card: #181818;
+      --border: #2a2a2a;
+    }[data-theme="light"] {
+  --bg: #fafafa;
+  --bg2: #eeeeee;
+  --text: #111;
+  --card: #ffffff;
+  --border: #cccccc;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.4s, color 0.4s;
+}
+
+header {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  background: var(--bg2);
+  border-bottom: 2px solid var(--border);
+  position: relative;
+}
+
+#themeToggle {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 8px 12px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.historia-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  transition: transform 0.25s, background 0.4s;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: aparecer 0.6s forwards;
+}
+
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.historia-card:hover {
+  transform: scale(1.02);
+}
+
+.historia-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.historia-desc {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Página interna */
+.pagina-historia {
+  display: none;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.chapter-list div {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.chapter-list div:hover {
+  background: var(--bg2);
+}
+
+#voltar {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 0;
+  color: #555;
+  margin-top: 40px;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    Minhas Histórias
+    <button id="themeToggle">Tema</button>
+  </header>  <!-- Página principal -->  <div class="container" id="homePage">
+    <div class="historia-card" onclick="abrirHistoria('h1')">
+      <div class="historia-title">Saga de Ashael</div>
+      <div class="historia-desc">O caminho sombrio do vilão que nunca pediu para ser herói.</div>
+    </div><div class="historia-card" onclick="abrirHistoria('h2')">
+  <div class="historia-title">Outra História</div>
+  <div class="historia-desc">Uma prévia que desperta curiosidade.</div>
+</div>
+
+  </div>  <!-- Página interna da história -->  <div class="pagina-historia" id="paginaHistoria">
+    <h2 id="tituloHistoria"></h2><h3>Capítulos</h3>
+<div class="chapter-list" id="listaCapitulos"></div>
+
+<button id="voltar" onclick="voltarHome()">Voltar</button>
+
+  </div>  <footer>© Seu Nome — Universo em Construção</footer>  <script>
+    const historias = {
+      h1: {
+        titulo: "Saga de Ashael",
+        capitulos: [
+          "Capítulo 1 — O Selo e a Criança",
+          "Capítulo 2 — Sangue no Templo",
+          "Capítulo 3 — O Primeiro Caçador",
+        ]
+      },
+      h2: {
+        titulo: "Outra História",
+        capitulos: [
+          "Capítulo 1 — O Começo",
+          "Capítulo 2 — A Chama Esquecida",
+        ]
+      }
+    };
+
+    function abrirHistoria(id) {
+      document.getElementById("homePage").style.display = "none";
+      document.getElementById("paginaHistoria").style.display = "block";
+
+      const historia = historias[id];
+      document.getElementById("tituloHistoria").innerText = historia.titulo;
+
+      const lista = document.getElementById("listaCapitulos");
+      lista.innerHTML = "";
+      historia.capitulos.forEach(cap => {
+        const div = document.createElement("div");
+        div.innerText = cap;
+        lista.appendChild(div);
+      });
+    }
+
+    function voltarHome() {
+      document.getElementById("paginaHistoria").style.display = "none";
+      document.getElementById("homePage").style.display = "block";
+    }
+
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.onclick = () => {
+      const atual = document.body.getAttribute("data-theme");
+      document.body.setAttribute("data-theme", atual === "light" ? "dark" : "light");
+    };
+  </script></body>
+  </html>
